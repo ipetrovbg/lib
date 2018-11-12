@@ -1,27 +1,30 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = {
     entry: "./src/index.tsx",
     output: {
-        filename: "bundle.js",
+        filename: "bundle.min.js",
         path: __dirname + "/dist"
     },
     plugins: [
         new HtmlWebpackPlugin({template: './index.html'}),
-        new ExtractTextPlugin("styles.scss")
+        new ExtractTextPlugin("styles.scss"),
+        new TypedocWebpackPlugin({
+            output: {
+                out: __dirname + "/doc",
+                module: 'commonjs',
+                target: 'es5',
+                exclude: '**/node_modules/**/*.*',
+                experimentalDecorators: true,
+                excludeExternals: true
+            },
+        },  __dirname + "/src")
     ],
-    mode: 'development',
-
-    // Enable sourcemaps for debugging webpack's output.
+    mode: 'production',
     devtool: "source-map",
-
-    devServer: {
-        contentBase: path.join(__dirname, "dist"),
-        compress: true,
-        port: 3000
-    },
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.

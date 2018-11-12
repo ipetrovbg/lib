@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 module.exports = {
     entry: "./src/index.tsx",
     output: {
@@ -9,8 +10,9 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({template: './index.html'}),
-        new ExtractTextPlugin("styles.css")
+        new ExtractTextPlugin("styles.scss")
     ],
+    mode: 'development',
 
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
@@ -23,7 +25,7 @@ module.exports = {
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx", ".js", ".json", ".css"]
+        extensions: [".ts", ".tsx", ".js", ".json", ".scss"]
     },
 
     module: {
@@ -36,6 +38,15 @@ module.exports = {
                 }),
                 exclude: /node_modules/
             },
+            //-------------------- Add SCSS Loaders -------------------------//
+            {
+                test: /\.scss$/,
+                loaders: [
+                    require.resolve('style-loader'),
+                    require.resolve('css-loader'),
+                    require.resolve('sass-loader')
+                ]
+            },
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
@@ -43,7 +54,10 @@ module.exports = {
                     {
                         loader: "babel-loader",
                         options: {
-                            plugins: ["transform-class-properties", "transform-decorators-legacy"]
+                            plugins: [
+                                ["@babel/plugin-proposal-decorators", { legacy: true }],
+                                ["@babel/plugin-proposal-class-properties", { loose: false }],
+                            ]
                         }
                     },
                     {

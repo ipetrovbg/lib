@@ -1,7 +1,7 @@
 {
   "name": "lib",
   "version": "1.0.0",
-  "description": "",
+  "description": "React + Typescript + Webpack",
   "main": "webpack.config.js",
   "dependencies": {
     "@babel/core": "^7.1.5",
@@ -52,6 +52,6 @@
     "build": "webpack --config webpack.prod.config.js",
     "doc": "typedoc --out ./doc ./src"
   },
-  "author": "",
+  "author": "Petar Petrov/ipetrovbg",
   "license": "ISC"
 }

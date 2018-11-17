@@ -14,19 +14,24 @@ export class App extends React.Component<{test: string; }, {loading: boolean}> {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false
+            loading: true
         }
     }
     render() {
         return <div className="app">
             <Showcase>
-                <Button classNames="primary" loading={this.state.loading} onClick={this.onClickButton.bind(this)}>Follow</Button>
+                <Button classNames="in-group" disabled={false} loading={this.state.loading} onClick={this.onClickButton.bind(this)}>1</Button>
+                <Button classNames="in-group" disabled={false} loading={false}>2</Button>
+                <Button classNames="in-group" disabled={false} loading={false} onClick={this.setLoading.bind(this)}>3</Button>
+                <div>Something</div>
+                <Button classNames="" disabled={false} loading={false} onClick={this.setLoading.bind(this)}>3</Button>
             </Showcase>
         </div>;
     }
 
     public onClickButton() {
         console.log("Button was clicked");
+        this.setLoading();
     }
 
     public setLoading() {
